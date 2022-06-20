@@ -22,7 +22,7 @@ Fuji-Xerox DocuPrint CP105b
 ## I have created a new PPD file for the CP105b.
 ## I needed the hint from this blog https://blog.shines.me.uk/dell-1660w-linux-printer-drivers-ubuntu-18-04-lts/
 ## The line "and amended the problem file foo2hbpl1-wrapper.in so it can now uses number parameters, or paper strings parameters."
-## I found it actually didn't allow numbers, using the fork he linked (maybe there was a regression?). So instead I just made the PPD file use the actual paper codes like 'a4' and 'letter' (for the paper sizes I will actually use. Might need tidying up to finish the other paper sizes. But after 4 hours hacking away at this just to print one address label, I am ready for bed.)
+## I found it actually didn't allow numbers, using the fork he linked (edit: turns out I grabbed the master branch, and not the fork with the update in it). So instead I just made the PPD file use the actual paper codes like 'a4' and 'letter' (for the paper sizes I will actually use. Might need tidying up to finish the other paper sizes. But after 4 hours hacking away at this just to print one address label, I am ready for bed.)
 
 There's also an HBPLv2, already supported in Linux, which compresses image data more efficiently. Less expensive printers tend to avoid version 2, either because it requires more processing power, or because it uses patented technology.
 
