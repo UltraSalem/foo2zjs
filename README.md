@@ -30,6 +30,20 @@ This list may be incomplete. If the self-test page says "HBPL" but the printer w
 
 ## My cp105b test print page had "HBPL V2.13". But I couldn't get it to work, so have used hbpl1 for this implementation. I might try again with hbpl2 now that I kind of know what I am doing.
 
+My instructions for Ubuntu 22.04 (mostly taken from Install info file in the repo):
+
+Unplug printer.
+```
+$ sudo apt install lsb build-essential tix foomatic-filters groff dc
+$ cd /tmp
+$ git clone <this repo>
+$ cd foo2zjs
+$ make
+$ sudo make install cups
+```
+Plug your printer in. A wizard should pop up to add it, choose the Fuji Xerox cp105b-hbpl1 option that should come up as default. If not, then add you printer through the ubuntu printer setting pane. The below stuff was useless for me (also I seem to be stuck at 300x300, so the 600x600 note below seems off)
+
+-----
 The essential commands are:
 
 foo2hbpl1 to convert PBM, PGM, PPM, and PAM CMYK images to HBPLv1 format.
