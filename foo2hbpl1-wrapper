@@ -149,7 +149,7 @@ MODEL=0
 MEDIA=1		# plain
 COPIES=1
 PAPER=A4
-RES=600x600	# I modify it later on, as I was explicitly told not to do.
+RES=600x600	# I leave this alone now
 SOURCE=1
 NUP=
 CLIP_ALL=
@@ -176,7 +176,7 @@ case `$GSBIN --version` in
 *)	DEFAULTCOLORMODE=1
 	;;
 esac
-while getopts "1:23456789o:b:cC:d:g:l:u:L:m:n:p:q:r:s:tz:ABS:D:G:I:PX:Vh?" opt
+while getopts "1:23456789o:b:cC:d:g:l:u:L:m:n:p:q:s:tz:ABS:D:G:I:PX:Vh?" opt
 do
 	case $opt in
 	b)	GSBIN="$OPTARG";;
@@ -187,7 +187,7 @@ do
 	n)	COPIES="$OPTARG";;
 	p)	PAPER="$OPTARG";;
 	q)	QUALITY="$OPTARG";;
-	r)	RES="$OPTARG";;
+#	r)	RES="$OPTARG";;
 	s)	SOURCE="$OPTARG";;
 	t)	SAVETONER="-t";;
 	z)	MODEL="$OPTARG";;
@@ -271,13 +271,13 @@ esac
 #
 #	Validate Resolution
 #
-case "$RES" in
-300x300)	;;
-600x600)	;;
-1200x600)	;;
-1200x1200)	;;
-*)		error "Illegal resolution $RES";;
-esac
+#case "$RES" in
+#300x300)	;;
+#600x600)	;;
+#1200x600)	;;
+#1200x1200)	;;
+#*)		error "Illegal resolution $RES";;
+#esac
 
 #
 #	Figure out the paper dimensions in pixels/inch, and set the
@@ -372,13 +372,13 @@ esac
 PAPERSIZE="-sPAPERSIZE=$PAPER";
 
 #scale to res chosen, with reference res 600x600
-case "$RES" in
-300x300)	XDIM=`expr $XDIM / 2`; YDIM=`expr $YDIM / 2`;;
-600x600)	;;
-1200x600)	XDIM=`expr $XDIM \* 2`;;
-1200x1200)	YDIM=`expr $YDIM \* 2`; XDIM=`expr $XDIM \* 2`;;
-esac
-DIM="${XDIM}x${YDIM}"
+#case "$RES" in
+#300x300)	XDIM=`expr $XDIM / 2`; YDIM=`expr $YDIM / 2`;;
+#600x600)	;;
+#1200x600)	XDIM=`expr $XDIM \* 2`;;
+#1200x1200)	YDIM=`expr $YDIM \* 2`; XDIM=`expr $XDIM \* 2`;;
+#esac
+#DIM="${XDIM}x${YDIM}"
 
 #
 # Filter thru psnup if N-up printing has been requested
@@ -564,18 +564,18 @@ GS="$GSBIN -q -dBATCH -dSAFER -dQUIET -dNOPAUSE"
 
 foo2zjs-pstops $PSTOPS_OPTS | \
 $PREFILTER \
-| ($GS $PAPERSIZE -g$DIM -r$RES $GSDEV $GSOPTS \
+| ($GS $PAPERSIZE -g$DIM $GSDEV $GSOPTS \
     -sOutputFile="|cat 1>&3" $GAMMAFILE -_ >/dev/null) 3>&1 \
-| foo2hbpl1 -r$RES -m$MEDIA $CLIP_ALL -J "$LPJOB" -U "$USER"
+| foo2hbpl1 -m$MEDIA $CLIP_ALL -J "$LPJOB" -U "$USER"
 
 #
 #	Log the command line, for debugging and problem reports
 #
 if [ -x /usr/bin/logger ]; then
     logger -t "$BASENAME" -p lpr.info -- \
-	"$GSBIN $PAPERSIZE -g$DIM -r$RES $GSDEV $GSOPTS $GAMMAFILE"
+	"$GSBIN $PAPERSIZE -g$DIM $GSDEV $GSOPTS $GAMMAFILE"
     logger -t "$BASENAME" -p lpr.info -- \
-	"foo2hbpl1 -r$RES -m$MEDIA $CLIP_ALL"
+	"foo2hbpl1 -m$MEDIA $CLIP_ALL"
 fi
 
 #
