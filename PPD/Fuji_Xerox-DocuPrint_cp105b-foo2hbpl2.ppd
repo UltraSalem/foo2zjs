@@ -5,13 +5,23 @@
 *%
 *% This file is published under the GNU General Public License
 *%
-*% PPD-O-MATIC (3.0.0 or newer) generated this PPD file. It is for use with 
+*% PPD-O-MATIC (3.0.0 or newer) generated the PPD file this is based on. It is for use with 
 *% all programs and environments which use PPD files for dealing with
 *% printer capability information. The printer must be configured with the
 *% "foomatic-rip" backend filter script of Foomatic 3.0.0 or newer. This 
 *% file and "foomatic-rip" work together to support PPD-controlled printer
 *% driver option access with arbitrary free software printer drivers and
 *% printing spoolers.
+*%
+*% GitHub user UltraSalem https://github.com/UltraSalem hacked away at 
+*% it to try and get his Fuji Xerox CP105 b to work in Ubuntu. Still, 
+*% after futily failing for 6+ years.
+*%
+*% trying a v1.5 using hbpl2?
+*%
+*% v1.4 added in new resolution section, adding spaces in the flags after -r
+*% In FoomaticRIPOption Resolution section.
+*% and added explcit text for page format options instead of digit codes
 *%
 *% To save this file on your disk, wait until the download has completed
 *% (the animation of the browser logo must stop) and then use the
@@ -20,24 +30,24 @@
 *% DO NOT cut and paste this file into an editor with your mouse. This can
 *% introduce additional line breaks which lead to unexpected results.
 *%
-*% You may save this file as 'Fuji_Xerox-DocuPrint_CP105-foo2hbpl1.ppd'
+*% You may save this file as 'Fuji_Xerox-DocuPrint_cp105b-foo2hbpl2.ppd'
 *%
 *%
 *FormatVersion:	"4.3"
-*FileVersion:	"1.1"
+*FileVersion:	"1.5"
 *LanguageVersion: English 
 *LanguageEncoding: ISOLatin1
 *PCFileName:	"FOO2HBPL.PPD"
 *Manufacturer:	"Fuji Xerox"
-*Product:	"(DocuPrint CP105)"
-*cupsVersion:	1.0
+*Product:	"(DocuPrint CP105 b)"
+*cupsVersion:	2.4
 *cupsManualCopies: True
 *cupsModelNumber:  2
 *cupsFilter:	"application/vnd.cups-postscript 0 foomatic-rip"
 *%pprRIP:        foomatic-rip other
-*ModelName:     "Fuji Xerox DocuPrint CP105"
-*ShortNickName: "Fuji Xerox D.P. CP105 foo2hbpl1"
-*NickName:      "Fuji Xerox DocuPrint CP105 Foomatic/foo2hbpl1 (recommended)"
+*ModelName:     "Fuji Xerox DocuPrint CP105 b"
+*ShortNickName: "Fuji Xerox D.P. CP105 b foo2hbpl2"
+*NickName:      "Fuji Xerox DocuPrint CP105 b Foomatic/foo2hbpl2 (recommended)"
 *PSVersion:	"(3010.000) 550"
 *PSVersion:	"(3010.000) 651"
 *PSVersion:	"(3010.000) 652"
@@ -52,11 +62,11 @@
 *Throughput:	"1"
 *LandscapeOrientation: Plus90
 *TTRasterizer:	Type42
-*1284DeviceID: "DRV:Dfoo2hbpl1,R1,M0,TF;"
+*1284DeviceID: "MFG:Fuji Xerox;MDL:DocuPrint CP105 b;DRV:Dfoo2hbpl2,R1,M0,TF;"
 
-*driverName foo2hbpl1/foo2hbpl1: ""
+*driverName foo2hbpl2/foo2hbpl2: ""
 *driverType F/Filter: ""
-*driverUrl: "http://foo2hbpl.rkkda.com/"
+*driverUrl: "https://command-not-found.com/foo2hbpl2"
 *driverObsolete: False
 
 
@@ -77,8 +87,8 @@
 *ParamCustomPageSize WidthOffset: 4 points 0 0
 *ParamCustomPageSize HeightOffset: 5 points 0 0
 
-*FoomaticIDs: Fuji_Xerox-DocuPrint_CP105 foo2hbpl1
-*FoomaticRIPCommandLine: "foo2hbpl1-wrapper %A"
+*FoomaticIDs: Fuji_Xerox-DocuPrint_CP105b foo2hbpl2
+*FoomaticRIPCommandLine: "foo2hbpl2-wrapper %A"
 
 *OpenGroup: General/General
 
@@ -102,15 +112,31 @@
 *FoomaticRIPOptionSetting ColorMode=Monochrome: " "
 *CloseUI: *ColorMode
 
+*OpenUI *Resolution/Resolution: PickOne
+*FoomaticRIPOption Resolution: enum CmdLine A
+*OrderDependency: 130 AnySetup *Resolution
+*DefaultResolution: 600x600dpi
+*Resolution 300x300dpi/300x300 dpi: "%% FoomaticRIPOptionSetting: Resolution=300x300dpi"
+*FoomaticRIPOptionSetting Resolution=300x300dpi: "-r300x300 "
+*Resolution 600x600dpi/600x600 dpi: "%% FoomaticRIPOptionSetting: Resolution=600x600dpi"
+*FoomaticRIPOptionSetting Resolution=600x600dpi: "-r600x600 "
+*Resolution 1200x1200dpi/1200x1200 dpi: "%% FoomaticRIPOptionSetting: Resolution=1200x1200dpi"
+*FoomaticRIPOptionSetting Resolution=1200x1200dpi: "-r1200x1200 "
+*Resolution 2400x1200dpi/2400x1200 dpi: "%% FoomaticRIPOptionSetting: Resolution=2400x1200dpi"
+*FoomaticRIPOptionSetting Resolution=2400x1200dpi: "-r2400x1200 "
+*CloseUI: *Resolution
+
 *OpenUI *PageSize/Page Size: PickOne
 *FoomaticRIPOption PageSize: enum CmdLine A
 *OrderDependency: 135 AnySetup *PageSize
-*DefaultPageSize: Letter
+*DefaultPageSize: A4
 *PageSize Letter/Letter: "%% FoomaticRIPOptionSetting: PageSize=Letter"
 *FoomaticRIPOptionSetting PageSize=Letter: "-p4 "
 *PageSize A4/A4: "%% FoomaticRIPOptionSetting: PageSize=A4"
 *FoomaticRIPOptionSetting PageSize=A4: "-p1 "
-*PageSize B5jis/B5 (JIS): "%% FoomaticRIPOptionSetting: PageSize=B5jis"
+*PageSize A5/A5: "%% FoomaticRIPOptionSetting: PageSize=A5"
+*FoomaticRIPOptionSetting PageSize=A5: "-p3 "
+*PageSize B5jis/B5 (JIS): "%% FoomaticRIPOptionSetting: PageSize=B5"
 *FoomaticRIPOptionSetting PageSize=B5jis: "-p2 "
 *PageSize Env10/Env #10: "%% FoomaticRIPOptionSetting: PageSize=Env10"
 *FoomaticRIPOptionSetting PageSize=Env10: "-p9 "
@@ -132,9 +158,10 @@
 
 *OpenUI *PageRegion: PickOne
 *OrderDependency: 135 AnySetup *PageRegion
-*DefaultPageRegion: Letter
+*DefaultPageRegion: A4
 *PageRegion Letter/Letter: "%% FoomaticRIPOptionSetting: PageSize=Letter"
 *PageRegion A4/A4: "%% FoomaticRIPOptionSetting: PageSize=A4"
+*PageRegion A5/A5: "%% FoomaticRIPOptionSetting: PageSize=A5"
 *PageRegion B5jis/B5 (JIS): "%% FoomaticRIPOptionSetting: PageSize=B5jis"
 *PageRegion Env10/Env #10: "%% FoomaticRIPOptionSetting: PageSize=Env10"
 *PageRegion EnvC5/Env C5: "%% FoomaticRIPOptionSetting: PageSize=EnvC5"
@@ -146,9 +173,10 @@
 *PageRegion Legal/Legal: "%% FoomaticRIPOptionSetting: PageSize=Legal"
 *CloseUI: *PageRegion
 
-*DefaultImageableArea: Letter
+*DefaultImageableArea: A4
 *ImageableArea Letter/Letter: "9 12.00 603 780.00"
 *ImageableArea A4/A4: "9 12.00 586 830.00"
+*ImageableArea A5/A5: "9 12.00 411 583.00"
 *ImageableArea B5jis/B5 (JIS): "9 12.00 509 715.00"
 *ImageableArea Env10/Env #10: "9 12.00 288 672.00"
 *ImageableArea EnvC5/Env C5: "9 12.00 450 637.00"
@@ -159,9 +187,10 @@
 *ImageableArea Folio/Folio: "9 12.00 603 924.00"
 *ImageableArea Legal/Legal: "9 12.00 603 996.00"
 
-*DefaultPaperDimension: Letter
+*DefaultPaperDimension: A4
 *PaperDimension Letter/Letter: "612 792"
 *PaperDimension A4/A4: "595 842"
+*PaperDimension A5/A5: "420 595"
 *PaperDimension B5jis/B5 (JIS): "518 727"
 *PaperDimension Env10/Env #10: "297 684"
 *PaperDimension EnvC5/Env C5: "459 649"
@@ -355,8 +384,6 @@
 *FoomaticRIPOptionSetting NupOrient=land: "-ol "
 *NupOrient port/Portrait: "%% FoomaticRIPOptionSetting: NupOrient=port"
 *FoomaticRIPOptionSetting NupOrient=port: " "
-*NupOrient sea/Seascape: "%% FoomaticRIPOptionSetting: NupOrient=sea"
-*FoomaticRIPOptionSetting NupOrient=sea: "-os "
 *CloseUI: *NupOrient
 
 *OpenUI *NupPages/N-up Printing: PickOne

@@ -32,7 +32,7 @@ Create a black and white ZJS stream:
 .RS
 .nf
 gs -q -dBATCH -dSAFER -dQUIET -dNOPAUSE \ 
-    -sPAPERSIZE=letter -r600x600 -sDEVICE=pgmraw \ 
+    -sPAPERSIZE=A4 -r600x600 -sDEVICE=pgmraw \ 
     -sOutputFile=- - < testpage.ps \ 
 | foo2hbpl1 >testpage.zm
 .fi
@@ -43,7 +43,7 @@ Create a color ZJS stream:
 .RS
 .nf
 gs -q -dBATCH -dSAFER -dQUIET -dNOPAUSE \ 
-    -sPAPERSIZE=letter -g5100x6600 -r600x600 -sDEVICE=pamcmyk32 \ 
+    -sPAPERSIZE=A4 -g10200x6600 -r1200x600 -sDEVICE=pamcmyk32 \ 
     -sOutputFile=- - < testpage.ps \ 
 | foo2hbpl1 >testpage.zc
 .fi
@@ -60,6 +60,8 @@ Rick Richardson <rick.richardson@comcast.net>
 Peter Korf <peter@niendo.de>
 .br
 Dave Coffin <dcoffin@cybercom.net>
+.br
+UltraSalem <https://github.com/UltraSalem>
 .br
 ${URLHBPL}/
 '\"

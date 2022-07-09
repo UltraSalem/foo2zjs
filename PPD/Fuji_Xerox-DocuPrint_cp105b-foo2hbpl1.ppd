@@ -14,13 +14,17 @@
 *% printing spoolers.
 *%
 *% GitHub user UltraSalem https://github.com/UltraSalem hacked away at 
-*% it to try and get his Fuji Xerox CP105 b to work in Ubuntu. Still, 
+*% it to try and get his Fuji Xerox CP105b to work in Ubuntu. Still, 
 *% after futily failing for 6+ years.
-*% 
+*%
+*% v1.4 - edited foo2hbpl1 to include resolutions and re-include here
+*% more added explcit text for page format options instead of digit codes
+*%
 *% v1.3 - removed resolution choices - was getting "illegal option -r" 
 *% in /var/log/cups/error_log against this line
 *% foo2hbpl1-wrapper      -r600x600 
-*% and set A4 to be A4, not 1
+*% and set A4 to be A4, not 1. These seem to be required settings for hbpl1
+*% unless I find some stuff in the driver itself to tweak
 *%
 *% To save this file on your disk, wait until the download has completed
 *% (the animation of the browser logo must stop) and then use the
@@ -29,7 +33,7 @@
 *% DO NOT cut and paste this file into an editor with your mouse. This can
 *% introduce additional line breaks which lead to unexpected results.
 *%
-*% You may save this file as 'Fuji_Xerox-DocuPrint_cp105 b-foo2hbpl1.ppd'
+*% You may save this file as 'Fuji_Xerox-DocuPrint_cp105b-foo2hbpl1.ppd'
 *%
 *%
 *FormatVersion:	"4.3"
@@ -38,15 +42,15 @@
 *LanguageEncoding: ISOLatin1
 *PCFileName:	"FOO2HBPL.PPD"
 *Manufacturer:	"Fuji Xerox"
-*Product:	"(DocuPrint CP105 b)"
+*Product:	"(DocuPrint CP105b)"
 *cupsVersion:	1.0
 *cupsManualCopies: True
 *cupsModelNumber:  2
 *cupsFilter:	"application/vnd.cups-postscript 0 foomatic-rip"
 *%pprRIP:        foomatic-rip other
-*ModelName:     "Fuji Xerox DocuPrint CP105 b"
-*ShortNickName: "Fuji Xerox D.P. CP105 b foo2hbpl1"
-*NickName:      "Fuji Xerox DocuPrint CP105 b Foomatic/foo2hbpl1 (recommended)"
+*ModelName:     "Fuji Xerox DocuPrint CP105b"
+*ShortNickName: "Fuji Xerox D.P. CP105b foo2hbpl1"
+*NickName:      "Fuji Xerox DocuPrint CP105b Foomatic/foo2hbpl1 (recommended)"
 *PSVersion:	"(3010.000) 550"
 *PSVersion:	"(3010.000) 651"
 *PSVersion:	"(3010.000) 652"
@@ -61,11 +65,11 @@
 *Throughput:	"1"
 *LandscapeOrientation: Plus90
 *TTRasterizer:	Type42
-*1284DeviceID: "MFG:Fuji Xerox;MDL:DocuPrint CP105 b;DRV:Dfoo2hbpl1,R1,M0,TF;"
+*1284DeviceID: "MFG:Fuji Xerox;MDL:DocuPrint CP105b;DRV:Dfoo2hbpl1,R1,M0,TF;"
 
 *driverName foo2hbpl1/foo2hbpl1: ""
 *driverType F/Filter: ""
-*driverUrl: "http://foo2hbpl.rkkda.com/"
+*driverUrl: "https://github.com/UltraSalem/foo2zjs"
 *driverObsolete: False
 
 
@@ -86,7 +90,7 @@
 *ParamCustomPageSize WidthOffset: 4 points 0 0
 *ParamCustomPageSize HeightOffset: 5 points 0 0
 
-*FoomaticIDs: Fuji_Xerox-DocuPrint_CP105 b foo2hbpl1
+*FoomaticIDs: Fuji_Xerox-DocuPrint_CP105b foo2hbpl1
 *FoomaticRIPCommandLine: "foo2hbpl1-wrapper %A"
 
 *OpenGroup: General/General
@@ -111,6 +115,18 @@
 *FoomaticRIPOptionSetting ColorMode=Monochrome: " "
 *CloseUI: *ColorMode
 
+*OpenUI *Resolution/Resolution: PickOne
+*FoomaticRIPOption Resolution: enum CmdLine A
+*OrderDependency: 130 AnySetup *Resolution
+*DefaultResolution: 600x600dpi
+*Resolution 300x300dpi/300x300 dpi: "%% FoomaticRIPOptionSetting: Resolution=300x300dpi"
+*FoomaticRIPOptionSetting Resolution=300x300dpi: "-r300x300 "
+*Resolution 600x600dpi/600x600 dpi: "%% FoomaticRIPOptionSetting: Resolution=600x600dpi"
+*FoomaticRIPOptionSetting Resolution=600x600dpi: "-r600x600 "
+*Resolution 1200x1200dpi/1200x1200 dpi: "%% FoomaticRIPOptionSetting: Resolution=1200x1200dpi"
+*FoomaticRIPOptionSetting Resolution=1200x1200dpi: "-r1200x1200 "
+*CloseUI: *Resolution
+
 *OpenUI *PageSize/Page Size: PickOne
 *FoomaticRIPOption PageSize: enum CmdLine A
 *OrderDependency: 135 AnySetup *PageSize
@@ -124,25 +140,25 @@
 *PageSize B5jis/B5 (JIS): "%% FoomaticRIPOptionSetting: PageSize=B5jis"
 *FoomaticRIPOptionSetting PageSize=B5jis: "-p b5jis "
 *PageSize Env10/Env #10: "%% FoomaticRIPOptionSetting: PageSize=Env10"
-*FoomaticRIPOptionSetting PageSize=Env10: "-p9 "
+*FoomaticRIPOptionSetting PageSize=Env10: "-p env10 "
 *PageSize EnvC5/Env C5: "%% FoomaticRIPOptionSetting: PageSize=EnvC5"
-*FoomaticRIPOptionSetting PageSize=EnvC5: "-p11 "
+*FoomaticRIPOptionSetting PageSize=EnvC5: "-p envc5 "
 *PageSize EnvDL/Env DL: "%% FoomaticRIPOptionSetting: PageSize=EnvDL"
-*FoomaticRIPOptionSetting PageSize=EnvDL: "-p12 "
+*FoomaticRIPOptionSetting PageSize=EnvDL: "-p envdl "
 *PageSize EnvMonarch/Env Monarch: "%% FoomaticRIPOptionSetting: PageSize=EnvMonarch"
-*FoomaticRIPOptionSetting PageSize=EnvMonarch: "-p10 "
+*FoomaticRIPOptionSetting PageSize=EnvMonarch: "-p envmonarch "
 *PageSize Executive/Executive: "%% FoomaticRIPOptionSetting: PageSize=Executive"
-*FoomaticRIPOptionSetting PageSize=Executive: "-p5 "
+*FoomaticRIPOptionSetting PageSize=Executive: "-p executive "
 *PageSize FanfoldGermanLegal/Fanfold German Legal: "%% FoomaticRIPOptionSetting: PageSize=FanfoldGermanLegal"
 *FoomaticRIPOptionSetting PageSize=FanfoldGermanLegal: "-p6 "
 *PageSize Folio/Folio: "%% FoomaticRIPOptionSetting: PageSize=Folio"
-*FoomaticRIPOptionSetting PageSize=Folio: "-p6 "
+*FoomaticRIPOptionSetting PageSize=Folio: "-p folio "
 *PageSize Legal/Legal: "%% FoomaticRIPOptionSetting: PageSize=Legal"
-*FoomaticRIPOptionSetting PageSize=Legal: "-p7 "
+*FoomaticRIPOptionSetting PageSize=Legal: "-p legal "
 *CloseUI: *PageSize
 
 *OpenUI *PageRegion: PickOne
-*OrderDependency: 135 AnySetup *PageRegion
+*OrderDependency: 140 AnySetup *PageRegion
 *DefaultPageRegion: A4
 *PageRegion Letter/Letter: "%% FoomaticRIPOptionSetting: PageSize=Letter"
 *PageRegion A4/A4: "%% FoomaticRIPOptionSetting: PageSize=A4"
