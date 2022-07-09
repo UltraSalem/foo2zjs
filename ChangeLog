@@ -1,3 +1,8 @@
+2022-07-09 UltraSalem <https://github.com/UltraSalem/foo2zjs>
+	* Various attempts to get print resolution adjustment working for his
+	Fuji Xerox CP105b on Ubuntu 22.04. Focussing on foo2hbpl1 and 
+	Fuji_Xerox-DocuPrint_cp105b-foo2hbpl1.ppd
+
 2014-04-04	Dave Coffin <dcoffin@cybercom.net>
 	* fixed all known bugs in foo2hbpl1.c.  It now print multi-page
 	  color and grayscale documents without resetting printer.
