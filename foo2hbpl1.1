@@ -3,7 +3,7 @@
 '\"	DO NOT EDIT! This file is generated from foo2hbpl1.1in
 '\"
 '\" t
-.TH foo2hbpl1 1 "Wed Jan 31 15:46:19 2018" "foo2hbpl1 0.0"
+.TH foo2hbpl1 1 "Sat Jul 09 22:44:34 2022" "foo2hbpl1 0.0"
 '\"
 '\"
 '\"==========================================================================
@@ -208,7 +208,7 @@ Create a black and white ZJS stream:
 .RS
 .nf
 gs -q -dBATCH -dSAFER -dQUIET -dNOPAUSE \ 
-    -sPAPERSIZE=letter -r600x600 -sDEVICE=pgmraw \ 
+    -sPAPERSIZE=A4 -r600x600 -sDEVICE=pgmraw \ 
     -sOutputFile=- - < testpage.ps \ 
 | foo2hbpl1 >testpage.zm
 .fi
@@ -219,7 +219,7 @@ Create a color ZJS stream:
 .RS
 .nf
 gs -q -dBATCH -dSAFER -dQUIET -dNOPAUSE \ 
-    -sPAPERSIZE=letter -g5100x6600 -r600x600 -sDEVICE=pamcmyk32 \ 
+    -sPAPERSIZE=A4 -g10200x6600 -r1200x600 -sDEVICE=pamcmyk32 \ 
     -sOutputFile=- - < testpage.ps \ 
 | foo2hbpl1 >testpage.zc
 .fi
@@ -236,6 +236,8 @@ Rick Richardson <rick.richardson@comcast.net>
 Peter Korf <peter@niendo.de>
 .br
 Dave Coffin <dcoffin@cybercom.net>
+.br
+UltraSalem <https://github.com/UltraSalem>
 .br
 http://foo2hbpl.rkkda.com/
 '\"

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#* Copyright (C) 2013 Rick Richardson
+#* Copyright (C) 2022 UltraSalem, based on the work of Rick Richardson
 #*
 #* This program is free software; you can redistribute it and/or modify
 #* it under the terms of the GNU General Public License as published by
@@ -17,8 +17,9 @@
 #* Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #*
 #* Authors: Rick Richardson <rick.richardson@comcast.net>
+#* UltraSalem <https://github.com/UltraSalem>
 
-VERSION='$Id: foo2hbpl1-wrapper.in,v 1.3 2014/03/24 23:14:24 rick Exp $'
+VERSION='$Id: foo2hbpl1-wrapper.in, v1.5 2022-07-09 UltraSalem Exp $'
 
 #
 # Printer Notes:
@@ -64,7 +65,7 @@ Normal Options:
 		    letter, legal, a4, executive, env10, monarch,
 		    c5, envDL, isob5, jisb5, a5, folio, CustomWxH
 -n copies	  Number of copies [$COPIES]
-		  Resolution is always 600x600
+-r <xres>x<yres>  Set device resolution in pixels/inch [$RES]
 -t		  Draft mode.  Every other pixel is white.
 -2/-3/-4/-6/-8/-10/-12/-14/-15/-16/-18
 		  Print with N-up (requires psutils)
@@ -147,8 +148,8 @@ COLORMODE=default
 MODEL=0
 MEDIA=1		# plain
 COPIES=1
-PAPER=letter
-RES=600x600	# do not change this
+PAPER=A4
+RES=600x600	# I modify it later on, as I was explicitly told not to do.
 SOURCE=1
 NUP=
 CLIP_ALL=
@@ -175,7 +176,7 @@ case `$GSBIN --version` in
 *)	DEFAULTCOLORMODE=1
 	;;
 esac
-while getopts "1:23456789o:b:cC:d:g:l:u:L:m:n:p:q:s:tz:ABS:D:G:I:PX:Vh?" opt
+while getopts "1:23456789o:b:cC:d:g:l:u:L:m:n:p:q:r:s:tz:ABS:D:G:I:PX:Vh?" opt
 do
 	case $opt in
 	b)	GSBIN="$OPTARG";;
@@ -186,6 +187,7 @@ do
 	n)	COPIES="$OPTARG";;
 	p)	PAPER="$OPTARG";;
 	q)	QUALITY="$OPTARG";;
+	r)	RES="$OPTARG";;
 	s)	SOURCE="$OPTARG";;
 	t)	SAVETONER="-t";;
 	z)	MODEL="$OPTARG";;
@@ -267,6 +269,17 @@ case "$SOURCE" in
 esac
 
 #
+#	Validate Resolution
+#
+case "$RES" in
+300x300)	;;
+600x600)	;;
+1200x600)	;;
+1200x1200)	;;
+*)		error "Illegal resolution $RES";;
+esac
+
+#
 #	Figure out the paper dimensions in pixels/inch, and set the
 #	default clipping region.  Unfortunately, this is a trouble
 #	area for ZjStream printers.  Various versions of ZjS print
@@ -294,7 +307,7 @@ Custom*x*)
 		fi
 		XDIM=`dc -e "$XDIM 600* 72/p"`
 		YDIM=`dc -e "$YDIM 600* 72/p"`
-		PAPER=21;        paper=letter;
+		PAPER=21;        paper=A4;
 		DIM="${XDIM}x${YDIM}"
 		;;
 Custom*)
@@ -333,7 +346,7 @@ Custom*)
 		esac
 		XDIM=`dc -e "$XDIM 600* 72/p"`
 		YDIM=`dc -e "$YDIM 600* 72/p"`
-		PAPER=21;        paper=letter;
+		PAPER=21;        paper=A4;
 		DIM="${XDIM}x${YDIM}"
 		;;
 
@@ -341,20 +354,15 @@ Custom*)
 # /usr/share/ghostscript/9.10/Resource/Init/gs_statd.ps
 # foo2hbpl1 will provide the appropriate numeric value
 
-letter)		DIM=5100x6600  ;;
-legal)		DIM=5100x8400  ;;
-a4)		DIM=4961x7016  ;;
-executive)	DIM=4350x6300  ;;
-env10)		DIM=2475x5700  ;;
-monarch)	DIM=2325x4500  ;;
-c5)		DIM=3827x5409  ;;
-envDL)		DIM=2599x5197  ;;
-isob5|b5)	DIM=4158x5906  ;;
-jisb5)		DIM=4299x6071  ;;
-a5)		DIM=3496x4961  ;;
-folio)		DIM=5100x7800  ;;
-pa4)		DIM=4961x6600  ;;
-archA)		DIM=5400x7200  ;;
+4|letter)		DIM=5100x6600  ;;
+7|legal)		DIM=5100x8400  ;;
+1|a4|A4)		DIM=4960x7016  ;;
+5|executive)	DIM=4350x6300  ;;
+9|env10)		DIM=2475x5700  ;;
+10|envMonarch)	DIM=2475x5700  ;;
+11|envC5)		DIM=3825x5408  ;;
+12|envDL)		DIM=2600x5200  ;;
+16|a5|A5)		DIM=3496x4960  ;;
 *)		error "Unimplemented paper code $PAPER";;
 esac
 
@@ -362,6 +370,15 @@ esac
  set_clipping 51 51 51 51	# default is 0.085 inches all around
 
 PAPERSIZE="-sPAPERSIZE=$PAPER";
+
+#scale to res chosen, with reference res 600x600
+case "$RES" in
+300x300)	XDIM=`expr $XDIM / 2`; YDIM=`expr $YDIM / 2`;;
+600x600)	;;
+1200x600)	XDIM=`expr $XDIM \* 2`;;
+1200x1200)	YDIM=`expr $YDIM \* 2`; XDIM=`expr $XDIM \* 2`;;
+esac
+DIM="${XDIM}x${YDIM}"
 
 #
 # Filter thru psnup if N-up printing has been requested
@@ -549,7 +566,7 @@ foo2zjs-pstops $PSTOPS_OPTS | \
 $PREFILTER \
 | ($GS $PAPERSIZE -g$DIM -r$RES $GSDEV $GSOPTS \
     -sOutputFile="|cat 1>&3" $GAMMAFILE -_ >/dev/null) 3>&1 \
-| foo2hbpl1 -m$MEDIA $CLIP_ALL -J "$LPJOB" -U "$USER"
+| foo2hbpl1 -r$RES -m$MEDIA $CLIP_ALL -J "$LPJOB" -U "$USER"
 
 #
 #	Log the command line, for debugging and problem reports
@@ -558,7 +575,7 @@ if [ -x /usr/bin/logger ]; then
     logger -t "$BASENAME" -p lpr.info -- \
 	"$GSBIN $PAPERSIZE -g$DIM -r$RES $GSDEV $GSOPTS $GAMMAFILE"
     logger -t "$BASENAME" -p lpr.info -- \
-	"foo2hbpl1 -m$MEDIA $CLIP_ALL"
+	"foo2hbpl1 -r$RES -m$MEDIA $CLIP_ALL"
 fi
 
 #

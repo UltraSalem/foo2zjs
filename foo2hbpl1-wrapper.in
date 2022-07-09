@@ -373,10 +373,10 @@ PAPERSIZE="-sPAPERSIZE=$PAPER";
 
 #scale to res chosen, with reference res 600x600
 case "$RES" in
-300x300)	XDIM=`expr $XDIM / 2`;YDIM=`expr $YDIM / 2`;
+300x300)	XDIM=`expr $XDIM / 2`; YDIM=`expr $YDIM / 2`;;
 600x600)	;;
 1200x600)	XDIM=`expr $XDIM \* 2`;;
-1200x1200)	YDIM=`expr $YDIM \* 2`;XDIM=`expr $XDIM \* 2`;
+1200x1200)	YDIM=`expr $YDIM \* 2`; XDIM=`expr $XDIM \* 2`;;
 esac
 DIM="${XDIM}x${YDIM}"
 
