@@ -120,11 +120,11 @@
 *OrderDependency: 130 AnySetup *Resolution
 *DefaultResolution: 600x600dpi
 *Resolution 300x300dpi/300x300 dpi: "%% FoomaticRIPOptionSetting: Resolution=300x300dpi"
-*FoomaticRIPOptionSetting Resolution=300x300dpi: "-r300x300 "
+*FoomaticRIPOptionSetting Resolution=300x300dpi: "-r 300x300 "
 *Resolution 600x600dpi/600x600 dpi: "%% FoomaticRIPOptionSetting: Resolution=600x600dpi"
-*FoomaticRIPOptionSetting Resolution=600x600dpi: "-r600x600 "
+*FoomaticRIPOptionSetting Resolution=600x600dpi: "-r 600x600 "
 *Resolution 1200x1200dpi/1200x1200 dpi: "%% FoomaticRIPOptionSetting: Resolution=1200x1200dpi"
-*FoomaticRIPOptionSetting Resolution=1200x1200dpi: "-r1200x1200 "
+*FoomaticRIPOptionSetting Resolution=1200x1200dpi: "-r 1200x1200 "
 *CloseUI: *Resolution
 
 *OpenUI *PageSize/Page Size: PickOne
